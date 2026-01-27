@@ -3,440 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon — FDIW</title>
+    <title>FDIW — Ultimate Webhook Manager</title>
     <link rel="icon" type="image/svg" href="https://raw.githubusercontent.com/fd-iw/website/refs/heads/main/eye-slash.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Preserving Original Theme Colors */
             --bg-dark: #0f0f0f;
-            --bg-light: #1a1a1a;
+            --bg-panel: #161616;
+            --bg-card: #1e1e1e;
+            --accent: #ffffff;
+            --discord-blurple: #5865F2;
             --text-main: #e0e0e0;
-            --text-muted: #a0a0a0;
-            --text-dark: #666;
-            --accent-border: #333;
-            --success: #7ec850;
-            --error: #ff6b6b;
+            --text-dim: #888;
+            --border: #2a2a2a;
+            --danger: #ff4d4d;
+            --success: #00fa9a;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 50%, var(--bg-dark) 100%);
+            background: var(--bg-dark);
             color: var(--text-main);
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Upgrade: Noise Texture Overlay */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.05;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        /* Animated background elements (Refined) */
-        .bg-element {
-            position: fixed;
-            border-radius: 50%;
-            opacity: 0.4; /* Slightly increased for blur effect */
-            filter: blur(80px); /* Upgrade: Softer, more modern blur */
-            z-index: 0;
-            animation: float 10s ease-in-out infinite;
-        }
-
-        .bg-element-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-            top: -150px;
-            right: -150px;
-        }
-
-        .bg-element-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
-            bottom: -100px;
-            left: -100px;
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
-
-        /* Upgrade: Glass Card Container */
-        .card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 60px 40px;
-            border-radius: 24px;
-            text-align: center;
-            z-index: 10;
-            max-width: 700px;
-            width: 90%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .domain {
-            font-size: 13px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 24px;
-            font-weight: 600;
-            display: inline-block;
-            padding: 6px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(48px, 6vw, 72px);
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #fff 20%, #888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.1;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            font-weight: 300;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            line-height: 1.6;
-            max-width: 480px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Upgrade: Countdown Timer */
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .countdown-item {
+        /* --- Sidebar Navigation --- */
+        nav {
+            width: 260px;
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            align-items: center;
+            padding: 24px;
+            z-index: 100;
         }
 
-        .countdown-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #fff;
-            font-feature-settings: "tnum";
-            font-variant-numeric: tabular-nums;
-        }
-
-        .countdown-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        /* Signup Section */
-        .signup-container {
+        .logo {
             display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo img { width: 28px; filter: invert(1); }
+
+        .nav-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: all 0.2s;
+            margin-bottom: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
             gap: 10px;
-            max-width: 420px;
-            margin: 0 auto;
-            position: relative;
         }
 
-        input[type="email"] {
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .nav-item.active { background: #fff; color: #000; }
+
+        /* --- Main Content Area --- */
+        main {
             flex: 1;
-            padding: 16px 20px;
-            border: 1px solid var(--accent-border);
-            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: radial-gradient(circle at top right, #1a1a1a, #0f0f0f);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            height: 100%;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { font-size: 24px; margin-bottom: 8px; font-weight: 700; }
+        .subtitle { color: var(--text-dim); margin-bottom: 30px; font-size: 14px; }
+
+        /* --- Grid Layouts --- */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        /* --- Form Elements --- */
+        .field { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; letter-spacing: 1px; }
+        input, textarea, select {
+            width: 100%;
+            background: #0c0c0c;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
             color: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        input[type="email"]:focus {
+            font-family: inherit;
             outline: none;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(0, 0, 0, 0.4);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
         }
+        input:focus { border-color: var(--text-dim); }
 
-        button {
-            padding: 16px 28px;
-            background: #fff;
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
             border: none;
-            color: #000;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(255, 255, 255, 0.15);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
+        .btn-white { background: #fff; color: #000; }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,255,255,0.2); }
         
-        button.loading {
-            color: transparent;
-            pointer-events: none;
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); }
+
+        /* --- Embed Studio --- */
+        .preview-container {
+            background: #2b2d31;
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 4px solid var(--discord-blurple);
+            max-width: 500px;
         }
 
-        button.loading::after {
-            content: "";
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            top: 50%;
-            left: 50%;
-            margin-top: -8px;
-            margin-left: -8px;
-            border: 2px solid rgba(0,0,0,0.3);
-            border-top-color: #000;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+        .preview-title { color: #fff; font-weight: 600; margin-bottom: 8px; }
+        .preview-desc { color: #dbdee1; font-size: 14px; line-height: 1.4; }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .message {
-            margin-top: 16px;
-            font-size: 13px;
-            height: 24px;
+        /* --- Console Bar --- */
+        .console-bar {
+            height: 40px;
+            background: #000;
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .message.visible {
-            opacity: 1;
-        }
-
-        .message.success { color: var(--success); }
-        .message.error { color: var(--error); }
-
-        /* Footer */
-        .footer {
-            position: fixed;
-            bottom: 30px;
-            width: 100%;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 12px;
-        }
-
-        .footer-link {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-size: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: #fff;
-        }
-
-        .copyright {
+            padding: 0 20px;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            color: #444;
-            letter-spacing: 0.5px;
+            color: var(--text-dim);
         }
 
-        @media (max-width: 600px) {
-            .card { padding: 40px 24px; width: 95%; }
-            h1 { font-size: 42px; }
-            .signup-container { flex-direction: column; }
-            button { width: 100%; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); margin-right: 10px; }
+
+        /* --- Manager Tab --- */
+        .webhook-list { display: flex; flex-direction: column; gap: 10px; }
+        .webhook-item {
+            background: #161616;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
         }
+
     </style>
 </head>
 <body>
-    <div class="noise-overlay"></div>
-    <div class="bg-element bg-element-1"></div>
-    <div class="bg-element bg-element-2"></div>
 
-    <main class="card">
-        <div class="domain">FDIW.CC</div>
+    <nav>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/fd-iw/website/refs/heads/main/eye-slash.svg" alt="FDIW">
+            FDIW TOOLS
+        </div>
+        <div class="nav-item active" onclick="showTab('sender')"><span>🚀</span> Sender</div>
+        <div class="nav-item" onclick="showTab('studio')"><span>🎨</span> Embed Studio</div>
+        <div class="nav-item" onclick="showTab('manager')"><span>⚙️</span> Manager</div>
+        <div class="nav-item" onclick="showTab('settings')"><span>🛠</span> Settings</div>
         
-        <h1>Coming Soon</h1>
-        
-        <p class="subtitle">Something remarkable is on the horizon. We are crafting a digital experience worth waiting for.</p>
+        <div style="margin-top: auto; font-size: 10px; color: #444; text-align: center;">V 2.0.4 — BETA</div>
+    </nav>
 
-        <div class="countdown" id="countdown">
-            <div class="countdown-item">
-                <span class="countdown-value" id="days">00</span>
-                <span class="countdown-label">Days</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-value" id="hours">00</span>
-                <span class="countdown-label">Hrs</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-value" id="minutes">00</span>
-                <span class="countdown-label">Min</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-value" id="seconds">00</span>
-                <span class="countdown-label">Sec</span>
+    <main>
+        <div id="sender" class="tab-content active">
+            <h2>Fast Sender</h2>
+            <p class="subtitle">Broadcast messages to your webhook with automated loops.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="field">
+                        <label>Webhook URL</label>
+                        <input type="text" id="mainWebhook" placeholder="https://discord.com/api/webhooks/...">
+                    </div>
+                    <div class="field">
+                        <label>Message Content</label>
+                        <textarea id="mainContent" rows="5" placeholder="Enter message text..."></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Delay (ms)</label>
+                        <input type="number" id="mainDelay" value="1000">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-white" onclick="fireOnce()">Send Once</button>
+                        <button class="btn btn-outline" id="loopBtn" onclick="toggleLoop()">Start Loop</button>
+                    </div>
+                </div>
+                
+                <div class="card" style="background: #000; border-color: #333;">
+                    <label>Live Output</label>
+                    <div id="liveOutput" style="font-family: 'JetBrains Mono'; font-size: 11px; height: 300px; overflow-y: auto; color: #00ff00;">
+                        > System initialized...<br>
+                        > Awaiting user input...
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="signup-section">
-            <div class="signup-container">
-                <input 
-                    type="email" 
-                    id="emailInput" 
-                    placeholder="Enter your email address"
-                    autocomplete="email"
-                    spellcheck="false"
-                >
-                <button id="submitBtn" onclick="handleSignup()">Notify Me</button>
+
+        <div id="studio" class="tab-content">
+            <h2>Embed Studio</h2>
+            <p class="subtitle">Design professional Discord embeds with visual feedback.</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="field">
+                        <label>Title</label>
+                        <input type="text" id="eTitle" oninput="syncEmbed()" placeholder="The Headline">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea id="eDesc" oninput="syncEmbed()" placeholder="Main body text..."></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Color</label>
+                        <input type="color" id="eColor" value="#5865f2" oninput="syncEmbed()">
+                    </div>
+                    <div class="field">
+                        <label>Image URL</label>
+                        <input type="text" id="eImage" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div>
+                    <label>Live Preview</label>
+                    <div class="preview-container" id="pBorder">
+                        <div class="preview-title" id="pTitle">Embed Title</div>
+                        <div class="preview-desc" id="pDesc">This is how your description will look. You can use markdown like **bold** or _italics_.</div>
+                    </div>
+                    <button class="btn btn-white" style="margin-top: 20px; width: 100%;" onclick="sendEmbed()">Send Embed to Main Webhook</button>
+                </div>
             </div>
-            <div class="message" id="message"></div>
+        </div>
+
+        <div id="manager" class="tab-content">
+            <h2>Webhook Manager</h2>
+            <p class="subtitle">Check status, fetch data, or delete webhooks permanently.</p>
+            
+            <div class="card">
+                <div class="field">
+                    <label>Target Webhook</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="manageUrl" placeholder="Enter URL to analyze">
+                        <button class="btn btn-white" onclick="analyzeWebhook()">Analyze</button>
+                    </div>
+                </div>
+                <div id="webhookStats" style="display:none; margin-top: 20px; padding: 20px; border: 1px solid #333; border-radius: 8px;">
+                    <p id="statName"></p>
+                    <p id="statChannel"></p>
+                    <button class="btn" style="background:var(--danger); color:#fff; margin-top:15px;" onclick="deleteWebhook()">Delete Webhook</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="tab-content">
+            <h2>Settings</h2>
+            <p class="subtitle">Configure tool behavior and interface.</p>
+            <div class="card">
+                <div class="field">
+                    <label>Persistent Storage</label>
+                    <p style="font-size:12px; color:var(--text-dim); margin-bottom:10px;">Save Webhook URL in browser memory?</p>
+                    <button class="btn btn-outline" onclick="saveToLocal()">Save Configuration</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="console-bar">
+            <div class="status-dot"></div>
+            <span id="globalStatus">FDIW Connected</span>
         </div>
     </main>
 
-    <div class="footer">
-        <div class="footer-links">
-            <a href="#" class="footer-link" aria-label="Twitter">𝕏</a>
-            <a href="#" class="footer-link" aria-label="Instagram">IG</a>
-            <a href="mailto:contactfdiw@gmail.com" class="footer-link" aria-label="Email">✉</a>
-        </div>
-        <div class="copyright">© 2026 FDIW — All Rights Reserved</div>
-    </div>
-
     <script>
-        // --- Countdown Logic ---
-        // Set launch date to 14 days from now for demo purposes
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 14); 
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+        // --- Tab Switching ---
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // --- Core Logic: Sender ---
+        let loopActive = false;
+        let loopTimer = null;
 
-        // --- Signup Logic ---
-        function handleSignup() {
-            const emailInput = document.getElementById('emailInput');
-            const messageDiv = document.getElementById('message');
-            const submitBtn = document.getElementById('submitBtn');
-            const email = emailInput.value.trim();
-
-            // Clear previous state
-            messageDiv.className = 'message';
-            messageDiv.textContent = '';
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
-            if (!email) {
-                showMessage('Please enter your email', 'error');
-                return;
-            }
-
-            if (!emailRegex.test(email)) {
-                showMessage('Please enter a valid email address', 'error');
-                return;
-            }
-
-            // Simulate API call with loading state
-            submitBtn.classList.add('loading');
-            
-            setTimeout(() => {
-                submitBtn.classList.remove('loading');
-                showMessage('You are on the list! We will be in touch.', 'success');
-                emailInput.value = '';
-                console.log('Email signup:', email);
-            }, 1500);
+        function log(msg) {
+            const out = document.getElementById('liveOutput');
+            const time = new Date().toLocaleTimeString();
+            out.innerHTML += `<br> [${time}] ${msg}`;
+            out.scrollTop = out.scrollHeight;
         }
 
-        function showMessage(text, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = `message ${type} visible`;
-            
-            // Clear error messages automatically, keep success messages longer
-            if(type === 'error') {
-                setTimeout(() => {
-                    messageDiv.classList.remove('visible');
-                }, 3000);
+        async function fireOnce() {
+            const url = document.getElementById('mainWebhook').value;
+            const content = document.getElementById('mainContent').value;
+            if(!url) return alert("Missing Webhook URL");
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ content: content })
+                });
+                if(res.ok) log("Message sent successfully.");
+                else log("Error: " + res.status);
+            } catch(e) { log("Failed to fetch."); }
+        }
+
+        function toggleLoop() {
+            if(loopActive) {
+                clearInterval(loopTimer);
+                loopActive = false;
+                document.getElementById('loopBtn').innerText = "Start Loop";
+                log("Loop halted.");
+            } else {
+                const delay = document.getElementById('mainDelay').value || 1000;
+                loopActive = true;
+                document.getElementById('loopBtn').innerText = "Stop Loop";
+                log(`Loop started at ${delay}ms`);
+                loopTimer = setInterval(fireOnce, delay);
             }
         }
 
-        // Allow Enter key to submit
-        document.getElementById('emailInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                handleSignup();
+        // --- Embed Logic ---
+        function syncEmbed() {
+            document.getElementById('pTitle').innerText = document.getElementById('eTitle').value || "Embed Title";
+            document.getElementById('pDesc').innerText = document.getElementById('eDesc').value || "Main body text...";
+            document.getElementById('pBorder').style.borderColor = document.getElementById('eColor').value;
+        }
+
+        async function sendEmbed() {
+            const url = document.getElementById('mainWebhook').value;
+            const title = document.getElementById('eTitle').value;
+            const desc = document.getElementById('eDesc').value;
+            const color = parseInt(document.getElementById('eColor').value.replace('#', ''), 16);
+
+            const payload = {
+                embeds: [{ title, description: desc, color }]
+            };
+
+            await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            log("Embed sent.");
+        }
+
+        // --- Manager Logic ---
+        async function analyzeWebhook() {
+            const url = document.getElementById('manageUrl').value;
+            const res = await fetch(url);
+            if(res.ok) {
+                const data = await res.json();
+                document.getElementById('webhookStats').style.display = 'block';
+                document.getElementById('statName').innerText = "Name: " + data.name;
+                document.getElementById('statChannel').innerText = "Channel ID: " + data.channel_id;
+            } else {
+                alert("Invalid Webhook or No Access");
             }
-        });
+        }
+
+        async function deleteWebhook() {
+            if(!confirm("Are you sure? This will permanently kill the webhook.")) return;
+            const url = document.getElementById('manageUrl').value;
+            const res = await fetch(url, { method: 'DELETE' });
+            if(res.ok) {
+                alert("Webhook Deleted.");
+                document.getElementById('webhookStats').style.display = 'none';
+            }
+        }
+
+        function saveToLocal() {
+            const url = document.getElementById('mainWebhook').value;
+            localStorage.setItem('fdiw_webhook', url);
+            alert("Settings Saved Locally.");
+        }
+
+        window.onload = () => {
+            const saved = localStorage.getItem('fdiw_webhook');
+            if(saved) document.getElementById('mainWebhook').value = saved;
+        }
     </script>
 </body>
 </html>
