@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Slider</title>
+    <title>Coming Soon — FDIW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,104 +13,341 @@
         }
 
         body {
-            width: 100%;
-            height: 100vh;
-            background-color: #ffffff;
-            transition: background-color 0.1s ease;
-            font-family: Arial, sans-serif;
-        }
-
-        .slider-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: auto;
-            background: transparent;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            overflow: hidden;
+            position: relative;
         }
 
-        body:hover .slider-container {
-            transform: translateY(0);
+        /* Animated background elements */
+        .bg-element {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.05;
+            mix-blend-mode: screen;
+            pointer-events: none;
         }
 
-        .slider-label {
-            color: #333;
+        .bg-element-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .bg-element-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            bottom: -50px;
+            left: -50px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Main container */
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+            max-width: 800px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo/Domain */
+        .domain {
             font-size: 14px;
-            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 30px;
+            font-weight: 500;
+            animation: slideIn 1s ease-out 0.2s both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Main heading */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, #b0b0b0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideIn 1s ease-out 0.4s both;
+            line-height: 1.2;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: #a0a0a0;
+            margin-bottom: 50px;
+            line-height: 1.6;
+            animation: slideIn 1s ease-out 0.6s both;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Email signup section */
+        .signup-section {
+            animation: slideIn 1s ease-out 0.8s both;
+            margin-bottom: 40px;
+        }
+
+        .signup-label {
+            display: block;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .signup-container {
+            display: flex;
+            gap: 12px;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        input[type="email"] {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid #333;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        input[type="email"]::placeholder {
+            color: #666;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #666;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        button {
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
             white-space: nowrap;
         }
 
-        .slider-input {
-            width: 300px;
-            height: 8px;
-            cursor: pointer;
-            accent-color: #666;
+        button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #555;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        .color-display {
-            display: none;
+        button:active {
+            transform: translateY(0);
         }
 
-        .reset-button {
-            display: none;
+        /* Success message */
+        .message {
+            font-size: 14px;
+            margin-top: 12px;
+            height: 20px;
+            min-height: 20px;
+        }
+
+        .message.success {
+            color: #7ec850;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .message.error {
+            color: #ff6b6b;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            color: #555;
+            letter-spacing: 0.5px;
+            animation: slideIn 1s ease-out 1s both;
+        }
+
+        .footer a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid #555;
+        }
+
+        .footer a:hover {
+            color: #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .signup-container {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .footer {
+                font-size: 12px;
+                bottom: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="slider-container">
-        <span class="slider-label">Color:</span>
-        <input 
-            type="range" 
-            class="slider-input" 
-            min="0" 
-            max="360" 
-            value="0"
-            id="colorSlider"
-        >
-        <div class="color-display" id="colorDisplay"></div>
-        <button class="reset-button" id="resetButton">Reset</button>
+    <div class="bg-element bg-element-1"></div>
+    <div class="bg-element bg-element-2"></div>
+
+    <div class="container">
+        <div class="domain">FDIW.CC</div>
+        
+        <h1>Coming Soon</h1>
+        
+        <p class="subtitle">Something remarkable is on the horizon. Be among the first to know when we launch.</p>
+        
+        <div class="signup-section">
+            <label class="signup-label">Get notified</label>
+            <div class="signup-container">
+                <input 
+                    type="email" 
+                    id="emailInput" 
+                    placeholder="your@email.com"
+                    autocomplete="email"
+                >
+                <button onclick="handleSignup()">Notify Me</button>
+            </div>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 FDIW — <a href="mailto:contactfdiw@gmail.com">Contact</a>
     </div>
 
     <script>
-        const slider = document.getElementById('colorSlider');
-        const colorDisplay = document.getElementById('colorDisplay');
-        const resetButton = document.getElementById('resetButton');
-        const body = document.body;
+        function handleSignup() {
+            const emailInput = document.getElementById('emailInput');
+            const messageDiv = document.getElementById('message');
+            const email = emailInput.value.trim();
 
-        function updateColor(value) {
-            // Convert slider value (0-360) to RGB values (255-0)
-            // 0 = white (255,255,255)
-            // 180 = gray (127,127,127)
-            // 360 = black (0,0,0)
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
-            const rgbValue = Math.round(255 - (value / 360) * 255);
-            const color = `rgb(${rgbValue}, ${rgbValue}, ${rgbValue})`;
-            
-            body.style.backgroundColor = color;
-            colorDisplay.style.backgroundColor = color;
+            if (!email) {
+                messageDiv.textContent = 'Please enter your email';
+                messageDiv.className = 'message error';
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                messageDiv.textContent = 'Please enter a valid email';
+                messageDiv.className = 'message error';
+                return;
+            }
+
+            // Success message
+            messageDiv.textContent = '✓ Thanks! Check your email for updates.';
+            messageDiv.className = 'message success';
+            emailInput.value = '';
+
+            // You can integrate with a backend service here
+            // Example: send to email list, database, etc.
+            console.log('Email signup:', email);
+
+            // Clear message after 4 seconds
+            setTimeout(() => {
+                messageDiv.textContent = '';
+                messageDiv.className = 'message';
+            }, 4000);
         }
 
-        function resetColor() {
-            slider.value = 0;
-            updateColor(0);
-        }
-
-        slider.addEventListener('input', (e) => {
-            updateColor(e.target.value);
+        // Allow Enter key to submit
+        document.getElementById('emailInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSignup();
+            }
         });
-
-        resetButton.addEventListener('click', resetColor);
-
-        // Initialize
-        updateColor(0);
     </script>
 </body>
 </html>
