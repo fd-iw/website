@@ -3,413 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FDIW — Ultimate Webhook Manager</title>
-    <link rel="icon" type="image/svg" href="https://raw.githubusercontent.com/fd-iw/website/refs/heads/main/eye-slash.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <title>Coming Soon</title>
     <style>
-        :root {
-            --bg-dark: #0f0f0f;
-            --bg-panel: #161616;
-            --bg-card: #1e1e1e;
-            --accent: #ffffff;
-            --discord-blurple: #5865F2;
-            --text-main: #e0e0e0;
-            --text-dim: #888;
-            --border: #2a2a2a;
-            --danger: #ff4d4d;
-            --success: #00fa9a;
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-main);
-            height: 100vh;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
             display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
+            position: relative;
         }
 
-        /* --- Sidebar Navigation --- */
-        nav {
-            width: 260px;
-            background: var(--bg-panel);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 24px;
-            z-index: 100;
+        /* Animated Grid Background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(-60px, -60px);
+            }
+        }
+
+        /* Glow effect orbs */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-orb-1 {
+            width: 500px;
+            height: 500px;
+            background: #ffffff;
+            top: -250px;
+            right: -250px;
+            animation: float1 15s ease-in-out infinite;
+        }
+
+        .glow-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #666666;
+            bottom: -200px;
+            left: -200px;
+            animation: float2 18s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, 50px) scale(1.1); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.15); }
+        }
+
+        .container {
+            text-align: center;
+            padding: 60px 40px;
+            max-width: 1000px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container {
+            margin-bottom: 80px;
+            animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .logo img { width: 28px; filter: invert(1); }
-
-        .nav-item {
-            padding: 12px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--text-dim);
-            transition: all 0.2s;
-            margin-bottom: 8px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-        .nav-item.active { background: #fff; color: #000; }
-
-        /* --- Main Content Area --- */
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 8px;
+            color: #ffffff;
             position: relative;
-            background: radial-gradient(circle at top right, #1a1a1a, #0f0f0f);
+            display: inline-block;
+            padding: 12px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .tab-content {
-            display: none;
-            padding: 40px;
-            height: 100%;
-            overflow-y: auto;
-            animation: fadeIn 0.3s ease;
+        .logo:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
         }
 
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        h2 { font-size: 24px; margin-bottom: 8px; font-weight: 700; }
-        .subtitle { color: var(--text-dim); margin-bottom: 30px; font-size: 14px; }
-
-        /* --- Grid Layouts --- */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        /* --- Form Elements --- */
-        .field { margin-bottom: 20px; }
-        label { display: block; font-size: 12px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; letter-spacing: 1px; }
-        input, textarea, select {
-            width: 100%;
-            background: #0c0c0c;
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-            outline: none;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+            50% { opacity: 0.5; transform: translateY(-50%) scale(0.8); }
         }
-        input:focus { border-color: var(--text-dim); }
 
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
+        .main-content {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+            background: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: #999999;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+        }
+
+        .status-bar {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+            transition: all 0.3s ease;
         }
 
-        .btn-white { background: #fff; color: #000; }
-        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,255,255,0.2); }
-        
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
-        .btn-outline:hover { background: rgba(255,255,255,0.05); }
-
-        /* --- Embed Studio --- */
-        .preview-container {
-            background: #2b2d31;
-            border-radius: 8px;
-            padding: 16px;
-            border-left: 4px solid var(--discord-blurple);
-            max-width: 500px;
+        .status-bar:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .preview-title { color: #fff; font-weight: 600; margin-bottom: 8px; }
-        .preview-desc { color: #dbdee1; font-size: 14px; line-height: 1.4; }
-
-        /* --- Console Bar --- */
-        .console-bar {
-            height: 40px;
-            background: #000;
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--text-dim);
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: statusPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
         }
 
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); margin-right: 10px; }
-
-        /* --- Manager Tab --- */
-        .webhook-list { display: flex; flex-direction: column; gap: 10px; }
-        .webhook-item {
-            background: #161616;
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--border);
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
         }
 
+        .status-text {
+            font-size: 0.9rem;
+            color: #cccccc;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .decorative-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+        }
+
+        .line-top {
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .line-bottom {
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        /* Scan line effect */
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            animation: scan 8s linear infinite;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .logo-container {
+                margin-bottom: 60px;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+                letter-spacing: 5px;
+                padding: 10px 30px;
+            }
+
+            .main-content {
+                margin-bottom: 40px;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            .status-bar {
+                padding: 12px 24px;
+            }
+
+            .glow-orb-1, .glow-orb-2 {
+                filter: blur(60px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.1rem;
+                letter-spacing: 4px;
+                padding: 8px 24px;
+            }
+
+            .status-text {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <nav>
-        <div class="logo">
-            <img src="https://raw.githubusercontent.com/fd-iw/website/refs/heads/main/eye-slash.svg" alt="FDIW">
-            FDIW TOOLS
-        </div>
-        <div class="nav-item active" onclick="showTab('sender')"><span>🚀</span> Sender</div>
-        <div class="nav-item" onclick="showTab('studio')"><span>🎨</span> Embed Studio</div>
-        <div class="nav-item" onclick="showTab('manager')"><span>⚙️</span> Manager</div>
-        <div class="nav-item" onclick="showTab('settings')"><span>🛠</span> Settings</div>
+    <!-- Animated Grid Background -->
+    <div class="grid-background"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- Glow Orbs -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    
+    <!-- Scan Line Effect -->
+    <div class="scan-line"></div>
+    
+    <div class="container">
+        <div class="decorative-line line-top"></div>
         
-        <div style="margin-top: auto; font-size: 10px; color: #444; text-align: center;">V 2.0.4 — BETA</div>
-    </nav>
-
-    <main>
-        <div id="sender" class="tab-content active">
-            <h2>Fast Sender</h2>
-            <p class="subtitle">Broadcast messages to your webhook with automated loops.</p>
-            
-            <div class="grid">
-                <div class="card">
-                    <div class="field">
-                        <label>Webhook URL</label>
-                        <input type="text" id="mainWebhook" placeholder="https://discord.com/api/webhooks/...">
-                    </div>
-                    <div class="field">
-                        <label>Message Content</label>
-                        <textarea id="mainContent" rows="5" placeholder="Enter message text..."></textarea>
-                    </div>
-                    <div class="field">
-                        <label>Delay (ms)</label>
-                        <input type="number" id="mainDelay" value="1000">
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn btn-white" onclick="fireOnce()">Send Once</button>
-                        <button class="btn btn-outline" id="loopBtn" onclick="toggleLoop()">Start Loop</button>
-                    </div>
-                </div>
-                
-                <div class="card" style="background: #000; border-color: #333;">
-                    <label>Live Output</label>
-                    <div id="liveOutput" style="font-family: 'JetBrains Mono'; font-size: 11px; height: 300px; overflow-y: auto; color: #00ff00;">
-                        > System initialized...<br>
-                        > Awaiting user input...
-                    </div>
-                </div>
-            </div>
+        <div class="logo-container">
+            <div class="logo">FDIW.CC</div>
         </div>
-
-        <div id="studio" class="tab-content">
-            <h2>Embed Studio</h2>
-            <p class="subtitle">Design professional Discord embeds with visual feedback.</p>
-            
-            <div class="grid">
-                <div class="card">
-                    <div class="field">
-                        <label>Title</label>
-                        <input type="text" id="eTitle" oninput="syncEmbed()" placeholder="The Headline">
-                    </div>
-                    <div class="field">
-                        <label>Description</label>
-                        <textarea id="eDesc" oninput="syncEmbed()" placeholder="Main body text..."></textarea>
-                    </div>
-                    <div class="field">
-                        <label>Color</label>
-                        <input type="color" id="eColor" value="#5865f2" oninput="syncEmbed()">
-                    </div>
-                    <div class="field">
-                        <label>Image URL</label>
-                        <input type="text" id="eImage" placeholder="https://...">
-                    </div>
-                </div>
-
-                <div>
-                    <label>Live Preview</label>
-                    <div class="preview-container" id="pBorder">
-                        <div class="preview-title" id="pTitle">Embed Title</div>
-                        <div class="preview-desc" id="pDesc">This is how your description will look. You can use markdown like **bold** or _italics_.</div>
-                    </div>
-                    <button class="btn btn-white" style="margin-top: 20px; width: 100%;" onclick="sendEmbed()">Send Embed to Main Webhook</button>
-                </div>
-            </div>
+        
+        <div class="main-content">
+            <h1>COMING SOON</h1>
+            <p class="subtitle">Something extraordinary is in development. We're crafting an experience worth the wait.</p>
         </div>
-
-        <div id="manager" class="tab-content">
-            <h2>Webhook Manager</h2>
-            <p class="subtitle">Check status, fetch data, or delete webhooks permanently.</p>
-            
-            <div class="card">
-                <div class="field">
-                    <label>Target Webhook</label>
-                    <div style="display:flex; gap:10px;">
-                        <input type="text" id="manageUrl" placeholder="Enter URL to analyze">
-                        <button class="btn btn-white" onclick="analyzeWebhook()">Analyze</button>
-                    </div>
-                </div>
-                <div id="webhookStats" style="display:none; margin-top: 20px; padding: 20px; border: 1px solid #333; border-radius: 8px;">
-                    <p id="statName"></p>
-                    <p id="statChannel"></p>
-                    <button class="btn" style="background:var(--danger); color:#fff; margin-top:15px;" onclick="deleteWebhook()">Delete Webhook</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="settings" class="tab-content">
-            <h2>Settings</h2>
-            <p class="subtitle">Configure tool behavior and interface.</p>
-            <div class="card">
-                <div class="field">
-                    <label>Persistent Storage</label>
-                    <p style="font-size:12px; color:var(--text-dim); margin-bottom:10px;">Save Webhook URL in browser memory?</p>
-                    <button class="btn btn-outline" onclick="saveToLocal()">Save Configuration</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="console-bar">
+        
+        <div class="status-bar">
             <div class="status-dot"></div>
-            <span id="globalStatus">FDIW Connected</span>
+            <span class="status-text">Under Development</span>
         </div>
-    </main>
+        
+        <div class="decorative-line line-bottom"></div>
+    </div>
 
     <script>
-        // --- Tab Switching ---
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        // Smooth parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
             
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
+            document.querySelector('.glow-orb-1').style.transform = 
+                `translate(${moveX}px, ${moveY}px)`;
+            document.querySelector('.glow-orb-2').style.transform = 
+                `translate(${-moveX}px, ${-moveY}px)`;
+        });
 
-        // --- Core Logic: Sender ---
-        let loopActive = false;
-        let loopTimer = null;
+        // Add subtle tilt effect to container
+        const container = document.querySelector('.container');
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.clientX) / 50;
+            const yAxis = (window.innerHeight / 2 - e.clientY) / 50;
+            
+            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
 
-        function log(msg) {
-            const out = document.getElementById('liveOutput');
-            const time = new Date().toLocaleTimeString();
-            out.innerHTML += `<br> [${time}] ${msg}`;
-            out.scrollTop = out.scrollHeight;
-        }
-
-        async function fireOnce() {
-            const url = document.getElementById('mainWebhook').value;
-            const content = document.getElementById('mainContent').value;
-            if(!url) return alert("Missing Webhook URL");
-
-            try {
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ content: content })
-                });
-                if(res.ok) log("Message sent successfully.");
-                else log("Error: " + res.status);
-            } catch(e) { log("Failed to fetch."); }
-        }
-
-        function toggleLoop() {
-            if(loopActive) {
-                clearInterval(loopTimer);
-                loopActive = false;
-                document.getElementById('loopBtn').innerText = "Start Loop";
-                log("Loop halted.");
-            } else {
-                const delay = document.getElementById('mainDelay').value || 1000;
-                loopActive = true;
-                document.getElementById('loopBtn').innerText = "Stop Loop";
-                log(`Loop started at ${delay}ms`);
-                loopTimer = setInterval(fireOnce, delay);
-            }
-        }
-
-        // --- Embed Logic ---
-        function syncEmbed() {
-            document.getElementById('pTitle').innerText = document.getElementById('eTitle').value || "Embed Title";
-            document.getElementById('pDesc').innerText = document.getElementById('eDesc').value || "Main body text...";
-            document.getElementById('pBorder').style.borderColor = document.getElementById('eColor').value;
-        }
-
-        async function sendEmbed() {
-            const url = document.getElementById('mainWebhook').value;
-            const title = document.getElementById('eTitle').value;
-            const desc = document.getElementById('eDesc').value;
-            const color = parseInt(document.getElementById('eColor').value.replace('#', ''), 16);
-
-            const payload = {
-                embeds: [{ title, description: desc, color }]
-            };
-
-            await fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(payload)
-            });
-            log("Embed sent.");
-        }
-
-        // --- Manager Logic ---
-        async function analyzeWebhook() {
-            const url = document.getElementById('manageUrl').value;
-            const res = await fetch(url);
-            if(res.ok) {
-                const data = await res.json();
-                document.getElementById('webhookStats').style.display = 'block';
-                document.getElementById('statName').innerText = "Name: " + data.name;
-                document.getElementById('statChannel').innerText = "Channel ID: " + data.channel_id;
-            } else {
-                alert("Invalid Webhook or No Access");
-            }
-        }
-
-        async function deleteWebhook() {
-            if(!confirm("Are you sure? This will permanently kill the webhook.")) return;
-            const url = document.getElementById('manageUrl').value;
-            const res = await fetch(url, { method: 'DELETE' });
-            if(res.ok) {
-                alert("Webhook Deleted.");
-                document.getElementById('webhookStats').style.display = 'none';
-            }
-        }
-
-        function saveToLocal() {
-            const url = document.getElementById('mainWebhook').value;
-            localStorage.setItem('fdiw_webhook', url);
-            alert("Settings Saved Locally.");
-        }
-
-        window.onload = () => {
-            const saved = localStorage.getItem('fdiw_webhook');
-            if(saved) document.getElementById('mainWebhook').value = saved;
-        }
+        // Reset on mouse leave
+        document.addEventListener('mouseleave', () => {
+            container.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
     </script>
 </body>
 </html>
