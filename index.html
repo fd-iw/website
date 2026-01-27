@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐸 CURSED ANIMAL FACTS 🐸</title>
+    <title>Color Slider</title>
     <style>
         * {
             margin: 0;
@@ -12,371 +12,129 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', 'Papyrus', 'Trebuchet MS', cursive;
-            overflow: hidden;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff0000);
-            background-size: 400% 400%;
-            animation: cursedBG 8s ease infinite;
-            position: relative;
-        }
-
-        @keyframes cursedBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            position: absolute;
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            perspective: 1000px;
+            height: 100vh;
+            background-color: #ffffff;
+            transition: background-color 0.1s ease;
+            font-family: Arial, sans-serif;
         }
 
-        .chaos-text {
+        .slider-container {
             position: fixed;
-            font-size: 200px;
-            opacity: 0.05;
-            font-weight: 900;
-            pointer-events: none;
-            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         }
 
-        h1 {
-            position: absolute;
-            font-size: clamp(1.5rem, 10vw, 4rem);
-            text-shadow: 
-                3px 3px 0 #ff00ff,
-                6px 6px 0 #00ffff,
-                9px 9px 0 #ffff00;
-            letter-spacing: 3px;
-            transform: skewY(-5deg) rotate(var(--h1-rotate));
-            animation: wiggle 2s infinite;
+        body:hover .slider-container {
+            transform: translateY(0);
         }
 
-        @keyframes wiggle {
-            0%, 100% { transform: skewY(-5deg) rotate(var(--h1-rotate)) translateY(0px); }
-            25% { transform: skewY(-5deg) rotate(var(--h1-rotate)) translateY(-10px); }
-            75% { transform: skewY(-5deg) rotate(var(--h1-rotate)) translateY(10px); }
-        }
-
-        .fact-card {
-            position: absolute;
-            width: clamp(200px, 80vw, 500px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 5px dashed;
-            font-size: clamp(0.8rem, 3vw, 1.2rem);
-            line-height: 1.6;
-            backdrop-filter: blur(5px);
-            box-shadow: 
-                var(--shadow1),
-                var(--shadow2),
-                var(--shadow3);
-            animation: spin 4s linear infinite, float 3s ease-in-out infinite;
-            transform-origin: center;
+        .slider-label {
+            color: #333;
+            font-size: 14px;
             font-weight: bold;
+            white-space: nowrap;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        button {
-            position: absolute;
-            padding: clamp(10px, 5vw, 20px) clamp(15px, 8vw, 30px);
-            font-size: clamp(0.9rem, 4vw, 1.3rem);
-            border: 3px solid;
-            border-radius: 15px;
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-weight: 900;
+        .slider-input {
+            width: 300px;
+            height: 8px;
             cursor: pointer;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: var(--btn-shadow);
-            animation: buttonJump 0.5s infinite;
+            accent-color: #666;
         }
 
-        @keyframes buttonJump {
-            0%, 100% { transform: translateY(0px) scaleY(1); }
-            50% { transform: translateY(-5px) scaleY(1.05); }
+        .color-display {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 2px solid #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
         }
 
-        button:hover {
-            transform: scale(1.15) rotate(-5deg);
-            filter: brightness(1.3);
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-
-        .emoji-chaos {
-            position: fixed;
-            font-size: clamp(2rem, 8vw, 6rem);
-            opacity: 0.3;
-            pointer-events: none;
-            animation: float 5s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        .info-text {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: clamp(0.7rem, 2vw, 1rem);
-            transform: rotate(var(--info-rotate));
+        .reset-button {
+            padding: 8px 16px;
+            background-color: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
             font-weight: bold;
-            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.2s ease;
         }
 
-        .glitch {
-            position: relative;
-            animation: glitch 0.3s infinite;
-        }
-
-        @keyframes glitch {
-            0% {
-                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-                transform: translate(-2px, -2px);
-            }
-            50% {
-                clip-path: polygon(0 57%, 100% 57%, 100% 100%, 0 100%);
-                transform: translate(2px, 2px);
-            }
-            100% {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-                transform: translate(0, 0);
-            }
-        }
-
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            animation: sparkleAnim 1s forwards;
-        }
-
-        @keyframes sparkleAnim {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--tx), var(--ty)) scale(0);
-            }
+        .reset-button:hover {
+            background-color: #444;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="title">CURSED ANIMAL FACTS</h1>
-        <div class="fact-card" id="factCard">
-            <div id="factText">Loading cursed knowledge...</div>
-        </div>
-        <button id="nextBtn">GET CURSED</button>
-        <button id="resetBtn">RESET CHAOS</button>
-        
-        <!-- Chaos elements -->
-        <div class="emoji-chaos" style="--emoji: '🦆'; left: 10%; top: 10%;"></div>
-        <div class="emoji-chaos" style="--emoji: '🦖'; right: 5%; top: 30%;"></div>
-        <div class="emoji-chaos" style="--emoji: '🐙'; left: 15%; bottom: 10%;"></div>
-        <div class="emoji-chaos" style="--emoji: '🦗'; right: 20%; bottom: 20%;"></div>
-        <div class="emoji-chaos" style="--emoji: '🐢'; left: 30%; top: 40%;"></div>
-
-        <div class="info-text" id="infoText1">ANIMALS HAVE FEELINGS TOO</div>
-        <div class="info-text" id="infoText2">FACTS ARE FACTS</div>
-        <div class="info-text" id="infoText3">SCIENCE IS WEIRD</div>
+    <div class="slider-container">
+        <span class="slider-label">Color:</span>
+        <input 
+            type="range" 
+            class="slider-input" 
+            min="0" 
+            max="360" 
+            value="0"
+            id="colorSlider"
+        >
+        <div class="color-display" id="colorDisplay"></div>
+        <button class="reset-button" id="resetButton">Reset</button>
     </div>
 
     <script>
-        // Animal facts database
-        const animalFacts = [
-            {
-                animal: "🦑 SQUID",
-                fact: "Squids have THREE hearts. Two pump blood to the gills, one pumps it to the body. Also they can change color in 200 MILLISECONDS. Absolute chaos."
-            },
-            {
-                animal: "🦆 DUCK",
-                fact: "Ducks have a special bone in their throat that allows them to QUACK LOUDLY without damaging their hearing. Their quacks don't echo either. Alien technology."
-            },
-            {
-                animal: "🦗 CRICKET",
-                fact: "Male crickets SING BY RUBBING THEIR WINGS TOGETHER. Only the left wing has a scraper and the right wing has 300 teeth. That's basically a tiny chainsaw."
-            },
-            {
-                animal: "🦖 T-REX",
-                fact: "T-Rex arms were so powerful they could lift 400 pounds each. Their arms were STRONGER than human legs. Those tiny arms? MONSTERS."
-            },
-            {
-                animal: "🐙 OCTOPUS",
-                fact: "Octopuses have NINE BRAINS. One central brain and a mini-brain in each of their 8 arms. The arms can think independently. PURE NIGHTMARE FUEL."
-            },
-            {
-                animal: "🦑 ANGLERFISH",
-                fact: "Male anglerfish are so small compared to females that they literally FUSE to the female's body and their skin connects. They share blood. Absolutely UNHINGED relationship."
-            },
-            {
-                animal: "🦛 HIPPO",
-                fact: "Hippos can RUN 30 MPH on land despite weighing 4000 pounds. They also have PINK SWEAT that acts as sunscreen and antibiotic. What is this creature?!"
-            },
-            {
-                animal: "🦅 EAGLE",
-                fact: "Eagles can spot a rabbit from 2 MILES away. Their vision is 8 times better than humans. They're basically flying surveillance drones from 1970s spy movies."
-            },
-            {
-                animal: "🦇 BAT",
-                fact: "Bats navigate using ECHOLOCATION. They emit 10-20 clicks per SECOND. Some bats can echolocate moving objects the size of human hair. They're sonar demons."
-            },
-            {
-                animal: "🦆 PLATYPUS",
-                fact: "Platypuses glow BLUE-GREEN under ultraviolet light. Also they have no stomach - their esophagus connects directly to intestines. They're aliens who crashed on Earth."
-            },
-            {
-                animal: "🐢 TURTLE",
-                fact: "Some turtles can breathe through their BUTTS. Seriously. They have cloacal respiration. Nature is BROKEN."
-            },
-            {
-                animal: "🦗 MANTIS SHRIMP",
-                fact: "Mantis shrimp can see 16 COLOR RECEPTORS (humans see 3). They punch with the force of a bullet. They also turn into berries when they molt. Certified chaos agents."
-            }
-        ];
+        const slider = document.getElementById('colorSlider');
+        const colorDisplay = document.getElementById('colorDisplay');
+        const resetButton = document.getElementById('resetButton');
+        const body = document.body;
 
-        // Get random number within range
-        function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-
-        // Generate random color
-        function getRandomColor() {
-            const colors = [
-                '#FF00FF', '#00FFFF', '#FFFF00', '#FF0000', '#00FF00', '#0000FF',
-                '#FF69B4', '#00FF7F', '#FFD700', '#FF1493', '#00CED1', '#9400D3',
-                '#FFA500', '#32CD32', '#DC143C', '#1E90FF', '#FF4500', '#00FA9A'
-            ];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        // Position elements randomly
-        function positionElement(element) {
-            const maxX = window.innerWidth - element.offsetWidth;
-            const maxY = window.innerHeight - element.offsetHeight;
+        function updateColor(hue) {
+            // Convert HSL to RGB for smooth color transitions
+            // Using HSL makes it easy to get all colors from white to black
+            let lightness = 50 + (hue / 360) * 0; // Keep saturation consistent
             
-            element.style.left = randomInRange(0, maxX) + 'px';
-            element.style.top = randomInRange(0, maxY) + 'px';
-        }
-
-        // Style element with random colors
-        function styleElement(element, isFact = false) {
-            const bgColor = getRandomColor();
-            const textColor = getRandomColor();
-            const borderColor = getRandomColor();
-            const rotation = randomInRange(-15, 15);
-
-            if (isFact) {
-                element.style.backgroundColor = bgColor + '40';
-                element.style.color = textColor;
-                element.style.borderColor = borderColor;
-                element.style.transform = `rotate(${rotation}deg)`;
-            } else {
-                element.style.backgroundColor = bgColor;
-                element.style.color = textColor;
-                element.style.borderColor = borderColor;
-            }
-        }
-
-        // Initialize on load
-        function initializeCursedness() {
-            const title = document.getElementById('title');
-            const factCard = document.getElementById('factCard');
-            const nextBtn = document.getElementById('nextBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const infoTexts = document.querySelectorAll('.info-text');
-
-            // Position and style everything randomly
-            const maxX = window.innerWidth - 300;
-            const maxY = window.innerHeight - 100;
-
-            title.style.setProperty('--h1-rotate', randomInRange(-10, 10) + 'deg');
-            title.style.left = randomInRange(10, maxX) + 'px';
-            title.style.top = randomInRange(0, 100) + 'px';
-            title.style.color = getRandomColor();
-
-            positionElement(factCard);
-            styleElement(factCard, true);
-
-            positionElement(nextBtn);
-            styleElement(nextBtn);
-            nextBtn.style.boxShadow = `5px 5px 0 ${getRandomColor()}, 10px 10px 0 ${getRandomColor()}`;
-
-            positionElement(resetBtn);
-            styleElement(resetBtn);
-            resetBtn.style.boxShadow = `5px 5px 0 ${getRandomColor()}, 10px 10px 0 ${getRandomColor()}`;
-
-            // Info texts
-            infoTexts.forEach(text => {
-                text.style.setProperty('--info-rotate', randomInRange(-45, 45) + 'deg');
-                positionElement(text);
-                text.style.color = getRandomColor();
-            });
-
-            // Load first fact
-            showRandomFact();
-        }
-
-        // Display random fact
-        function showRandomFact() {
-            const randomFact = animalFacts[Math.floor(Math.random() * animalFacts.length)];
-            const factText = document.getElementById('factText');
+            // Create a smooth gradient through the color spectrum
+            // 0-60: Red to Yellow
+            // 60-120: Yellow to Green
+            // 120-180: Green to Cyan
+            // 180-240: Cyan to Blue
+            // 240-300: Blue to Magenta
+            // 300-360: Magenta to Red
             
-            factText.innerHTML = `<strong>${randomFact.animal}</strong><br><br>${randomFact.fact}`;
+            const color = `hsl(${hue}, 100%, 50%)`;
             
-            // Restyle the card
-            const factCard = document.getElementById('factCard');
-            styleElement(factCard, true);
-            
-            // Create sparkles
-            createSparkles();
+            body.style.backgroundColor = color;
+            colorDisplay.style.backgroundColor = color;
         }
 
-        // Create sparkle effects
-        function createSparkles() {
-            for (let i = 0; i < 10; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = '✨';
-                sparkle.style.left = randomInRange(0, window.innerWidth) + 'px';
-                sparkle.style.top = randomInRange(0, window.innerHeight) + 'px';
-                sparkle.style.setProperty('--tx', randomInRange(-100, 100) + 'px');
-                sparkle.style.setProperty('--ty', randomInRange(-100, 100) + 'px');
-                sparkle.style.color = getRandomColor();
-                sparkle.style.fontSize = randomInRange(10, 30) + 'px';
-                
-                document.body.appendChild(sparkle);
-                
-                setTimeout(() => sparkle.remove(), 1000);
-            }
+        function resetColor() {
+            slider.value = 0;
+            updateColor(0);
         }
 
-        // Event listeners
-        document.getElementById('nextBtn').addEventListener('click', showRandomFact);
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            localStorage.setItem('cursed-reset', Date.now());
-            location.reload();
+        slider.addEventListener('input', (e) => {
+            updateColor(e.target.value);
         });
 
-        // Initialize everything on load
-        window.addEventListener('load', initializeCursedness);
-        window.addEventListener('resize', initializeCursedness);
+        resetButton.addEventListener('click', resetColor);
+
+        // Initialize
+        updateColor(0);
     </script>
 </body>
 </html>
