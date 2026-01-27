@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FD-IW | Developer Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>🐸 CURSED ANIMAL FACTS 🐸</title>
     <style>
         * {
             margin: 0;
@@ -14,1001 +11,372 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-dark: #0a0e27;
-            --primary-darker: #050810;
-            --purple-main: #9d4edd;
-            --purple-light: #c77dff;
-            --purple-dark: #7209b7;
-            --accent-cyan: #00d9ff;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --border-color: #2a2d47;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
-            color: var(--text-primary);
-            overflow-x: hidden;
+            font-family: 'Comic Sans MS', 'Papyrus', 'Trebuchet MS', cursive;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff0000);
+            background-size: 400% 400%;
+            animation: cursedBG 8s ease infinite;
             position: relative;
         }
 
-        /* Animated background elements */
-        .bg-gradient-1 {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 50%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(114, 9, 183, 0.1) 0%, transparent 50%);
-            animation: drift 15s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
+        @keyframes cursedBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .bg-gradient-2 {
-            position: fixed;
-            bottom: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.05) 0%, transparent 50%);
-            animation: drift-reverse 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes drift {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
-
-        @keyframes drift-reverse {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-30px, -30px); }
-        }
-
-        /* Mouse interactive glow */
-        .mouse-glow {
-            position: fixed;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            filter: blur(60px);
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 60px;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--purple-light) 0%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-logo:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 50px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s ease;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        .nav-links a::after {
-            content: '';
+        .container {
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--purple-light), var(--accent-cyan));
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--purple-light);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 80px;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            animation: fadeInUp 0.8s ease-out;
-            z-index: 3;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 72px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            letter-spacing: 3px;
-            line-height: 1.2;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--purple-light) 0%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .hero-subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            font-weight: 300;
-            letter-spacing: 1.5px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 80px;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-
-        .btn {
-            padding: 15px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-light) 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--purple-light);
-            border: 2px solid var(--purple-light);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(157, 78, 221, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.2);
-        }
-
-        .scroll-indicator {
-            animation: bounce 2s ease-in-out infinite;
-            margin-top: 40px;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(10px); }
-        }
-
-        /* Sections */
-        section {
-            min-height: 100vh;
-            padding: 120px 60px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 54px;
-            font-weight: 900;
-            margin-bottom: 60px;
-            text-align: center;
-            letter-spacing: 2px;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .section-title span {
-            background: linear-gradient(135deg, var(--purple-light) 0%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* About Section */
-        .about-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .about-text {
-            font-size: 18px;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 30px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .skill-card {
-            background: rgba(157, 78, 221, 0.05);
-            border: 1px solid var(--border-color);
-            padding: 30px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            animation: fadeInUp 0.8s ease-out both;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card:nth-child(1) { animation-delay: 0.3s; }
-        .skill-card:nth-child(2) { animation-delay: 0.4s; }
-        .skill-card:nth-child(3) { animation-delay: 0.5s; }
-        .skill-card:nth-child(4) { animation-delay: 0.6s; }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 217, 255, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .skill-card:hover::before {
-            opacity: 1;
-        }
-
-        .skill-card:hover {
-            border-color: var(--purple-light);
-            transform: translateY(-10px);
-            background: rgba(157, 78, 221, 0.1);
-        }
-
-        .skill-name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--purple-light);
-        }
-
-        .skill-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Downloads Section */
-        .downloads-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tool-card {
-            background: rgba(10, 14, 39, 0.5);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.8s ease-out both;
-            position: relative;
-            cursor: pointer;
-            group: "tool";
-        }
-
-        .tool-card {
-            animation: fadeInUp 0.8s ease-out both;
-        }
-
-        .tool-card:hover {
-            border-color: var(--purple-light);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(157, 78, 221, 0.2);
-        }
-
-        .tool-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            overflow: hidden;
-        }
-
-        .tool-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            overflow: auto;
+            perspective: 1000px;
         }
 
-        .tool-card:hover .tool-image img {
-            transform: scale(1.1);
+        .chaos-text {
+            position: fixed;
+            font-size: 200px;
+            opacity: 0.05;
+            font-weight: 900;
+            pointer-events: none;
+            text-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .tool-info {
+        h1 {
+            position: absolute;
+            font-size: clamp(1.5rem, 10vw, 4rem);
+            text-shadow: 
+                3px 3px 0 #ff00ff,
+                6px 6px 0 #00ffff,
+                9px 9px 0 #ffff00;
+            letter-spacing: 3px;
+            transform: skewY(-5deg) rotate(var(--h1-rotate));
+            animation: wiggle 2s infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: skewY(-5deg) rotate(var(--h1-rotate)) translateY(0px); }
+            25% { transform: skewY(-5deg) rotate(var(--h1-rotate)) translateY(-10px); }
+            75% { transform: skewY(-5deg) rotate(var(--h1-rotate)) translateY(10px); }
+        }
+
+        .fact-card {
+            position: absolute;
+            width: clamp(200px, 80vw, 500px);
             padding: 30px;
-        }
-
-        .tool-name {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--purple-light);
-            margin-bottom: 10px;
-        }
-
-        .tool-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
+            border-radius: 20px;
+            border: 5px dashed;
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
             line-height: 1.6;
-        }
-
-        .download-btn {
-            background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-light) 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            letter-spacing: 1px;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(157, 78, 221, 0.3);
-        }
-
-        .download-btn:active {
-            transform: translateY(0);
-        }
-
-        .no-downloads {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--purple-light);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            backdrop-filter: blur(5px);
+            box-shadow: 
+                var(--shadow1),
+                var(--shadow2),
+                var(--shadow3);
+            animation: spin 4s linear infinite, float 3s ease-in-out infinite;
+            transform-origin: center;
+            font-weight: bold;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Contact Section */
-        .contact-container {
-            max-width: 600px;
-            margin: 0 auto;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
 
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .form-group label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: 1px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            background: rgba(157, 78, 221, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--purple-light);
-            background: rgba(157, 78, 221, 0.1);
-            box-shadow: 0 0 20px rgba(157, 78, 221, 0.2);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .submit-btn {
-            background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-light) 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.5);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 14, 39, 0.9);
-            border-top: 1px solid var(--border-color);
-            padding: 40px 60px;
-            text-align: center;
-            color: var(--text-secondary);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .social-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            letter-spacing: 1px;
-        }
-
-        .social-links a:hover {
-            color: var(--purple-light);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 0 30px;
-                flex-direction: column;
-                height: auto;
-                gap: 20px;
-            }
-
-            .nav-links {
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .hero h1 {
-                font-size: 48px;
-            }
-
-            .hero-subtitle {
-                font-size: 16px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-                max-width: 300px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            section {
-                padding: 80px 30px;
-            }
-
-            .section-title {
-                font-size: 36px;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .downloads-container {
-                grid-template-columns: 1fr;
-            }
-
-            footer {
-                padding: 30px 20px;
-            }
-        }
-
-        /* Glow effect on mouse move */
-        .glow-text {
-            position: relative;
-        }
-
-        .glow-text::after {
-            content: '';
+        button {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
-            opacity: 0;
-            animation: textGlow 3s ease-in-out infinite;
+            padding: clamp(10px, 5vw, 20px) clamp(15px, 8vw, 30px);
+            font-size: clamp(0.9rem, 4vw, 1.3rem);
+            border: 3px solid;
+            border-radius: 15px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: var(--btn-shadow);
+            animation: buttonJump 0.5s infinite;
         }
 
-        @keyframes textGlow {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+        @keyframes buttonJump {
+            0%, 100% { transform: translateY(0px) scaleY(1); }
+            50% { transform: translateY(-5px) scaleY(1.05); }
         }
 
-        /* Parallax effect */
-        .parallax-section {
+        button:hover {
+            transform: scale(1.15) rotate(-5deg);
+            filter: brightness(1.3);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .emoji-chaos {
+            position: fixed;
+            font-size: clamp(2rem, 8vw, 6rem);
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float 5s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .info-text {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            transform: rotate(var(--info-rotate));
+            font-weight: bold;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .glitch {
             position: relative;
+            animation: glitch 0.3s infinite;
         }
 
-        /* Smooth page transitions */
-        .page-transition {
-            animation: fadeIn 0.6s ease-out;
+        @keyframes glitch {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+                transform: translate(-2px, -2px);
+            }
+            50% {
+                clip-path: polygon(0 57%, 100% 57%, 100% 100%, 0 100%);
+                transform: translate(2px, 2px);
+            }
+            100% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                transform: translate(0, 0);
+            }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            animation: sparkleAnim 1s forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient-1"></div>
-    <div class="bg-gradient-2"></div>
-    <div class="mouse-glow" id="mouseGlow"></div>
+    <div class="container">
+        <h1 id="title">CURSED ANIMAL FACTS</h1>
+        <div class="fact-card" id="factCard">
+            <div id="factText">Loading cursed knowledge...</div>
+        </div>
+        <button id="nextBtn">GET CURSED</button>
+        <button id="resetBtn">RESET CHAOS</button>
+        
+        <!-- Chaos elements -->
+        <div class="emoji-chaos" style="--emoji: '🦆'; left: 10%; top: 10%;"></div>
+        <div class="emoji-chaos" style="--emoji: '🦖'; right: 5%; top: 30%;"></div>
+        <div class="emoji-chaos" style="--emoji: '🐙'; left: 15%; bottom: 10%;"></div>
+        <div class="emoji-chaos" style="--emoji: '🦗'; right: 20%; bottom: 20%;"></div>
+        <div class="emoji-chaos" style="--emoji: '🐢'; left: 30%; top: 40%;"></div>
 
-    <div class="content">
-        <!-- Navigation -->
-        <nav>
-            <div class="nav-logo" onclick="scrollToSection('hero')">FD-IW</div>
-            <ul class="nav-links">
-                <li><a href="#about" onclick="scrollToSection('about'); return false;">About</a></li>
-                <li><a href="#downloads" onclick="scrollToSection('downloads'); return false;">Downloads</a></li>
-                <li><a href="#contact" onclick="scrollToSection('contact'); return false;">Contact</a></li>
-            </ul>
-        </nav>
-
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <h1>
-                    Welcome to <span>FD-IW</span>
-                </h1>
-                <p class="hero-subtitle">Developer • Creator • Problem Solver</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary" onclick="scrollToSection('downloads')">Explore Tools</button>
-                    <button class="btn btn-secondary" onclick="scrollToSection('contact')">Get In Touch</button>
-                </div>
-                <div class="scroll-indicator" style="font-size: 24px;">⬇️</div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="parallax-section">
-            <h2 class="section-title">About <span>Me</span></h2>
-            <div class="about-container">
-                <p class="about-text">
-                    Hey there! I'm a developer with a passion for building tools that solve real problems. I've spent countless hours diving deep into code, experimenting with different languages, and pushing the boundaries of what's possible. From small utility applications to more complex systems, I genuinely love the process of turning an idea into something tangible and useful.
-                </p>
-
-                <p class="about-text">
-                    What drives me is the constant pursuit of learning and improvement. Whether it's mastering a new language, optimizing existing code, or finding elegant solutions to complex problems, I'm always looking for ways to level up my skills. I believe that great software is built through persistence, creativity, and a genuine care for the user experience.
-                </p>
-
-                <p class="about-text">
-                    Throughout my journey in development, I've worked across multiple programming paradigms and platforms. I'm particularly drawn to projects that challenge conventional thinking and require innovative approaches. The satisfaction of creating something that people actually use and benefit from is what keeps me motivated.
-                </p>
-
-                <p class="about-text">
-                    Beyond coding, I'm passionate about sharing knowledge and collaborating with other developers. I believe the best solutions come from diverse perspectives and open communication. If you've got an interesting problem to solve or just want to chat about development, I'm always up for it!
-                </p>
-
-                <h3 style="font-size: 32px; margin-top: 60px; margin-bottom: 30px; color: var(--text-primary); font-family: 'Orbitron', sans-serif;">Technical <span style="background: linear-gradient(135deg, var(--purple-light) 0%, var(--accent-cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Skills</span></h3>
-
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-name">C#</div>
-                        <div class="skill-description">
-                            Advanced proficiency in C# with expertise in XAML for desktop applications, async programming, and modern .NET frameworks.
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-name">Python</div>
-                        <div class="skill-description">
-                            Strong Python skills across data processing, automation, scripting, and various libraries for diverse applications.
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-name">C++</div>
-                        <div class="skill-description">
-                            Solid understanding of C++ with experience in performance-critical applications and systems programming.
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-name">Batch</div>
-                        <div class="skill-description">
-                            Proficient in batch scripting for Windows automation, system administration, and process automation tasks.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Downloads Section -->
-        <section id="downloads" class="parallax-section">
-            <h2 class="section-title">Download <span>Tools</span></h2>
-            <div class="downloads-container" id="downloadsContainer">
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-                    <div class="loading-spinner"></div>
-                    <p style="margin-top: 20px; color: var(--text-secondary);">Loading tools...</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="parallax-section">
-            <h2 class="section-title">Get In <span>Touch</span></h2>
-            <div class="contact-container">
-                <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="your@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required placeholder="What's this about?">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required placeholder="Your message here..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                    <p style="text-align: center; color: var(--text-secondary); font-size: 14px;" id="formStatus"></p>
-                </form>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="footer-content">
-                <div class="social-links">
-                    <a href="https://github.com/fd-iw" target="_blank">GitHub</a>
-                    <a href="https://twitter.com" target="_blank">Twitter</a>
-                    <a href="mailto:contact@fdiw.cc">Email</a>
-                </div>
-                <p>&copy; 2024 FD-IW. All rights reserved.</p>
-                <p style="font-size: 12px; margin-top: 10px;">Crafted with ❤️ and powered by pure code</p>
-            </div>
-        </footer>
+        <div class="info-text" id="infoText1">ANIMALS HAVE FEELINGS TOO</div>
+        <div class="info-text" id="infoText2">FACTS ARE FACTS</div>
+        <div class="info-text" id="infoText3">SCIENCE IS WEIRD</div>
     </div>
 
     <script>
-        // Mouse glow effect
-        const mouseGlow = document.getElementById('mouseGlow');
-        document.addEventListener('mousemove', (e) => {
-            mouseGlow.style.left = (e.clientX - 150) + 'px';
-            mouseGlow.style.top = (e.clientY - 150) + 'px';
-            mouseGlow.style.opacity = '1';
-        });
+        // Animal facts database
+        const animalFacts = [
+            {
+                animal: "🦑 SQUID",
+                fact: "Squids have THREE hearts. Two pump blood to the gills, one pumps it to the body. Also they can change color in 200 MILLISECONDS. Absolute chaos."
+            },
+            {
+                animal: "🦆 DUCK",
+                fact: "Ducks have a special bone in their throat that allows them to QUACK LOUDLY without damaging their hearing. Their quacks don't echo either. Alien technology."
+            },
+            {
+                animal: "🦗 CRICKET",
+                fact: "Male crickets SING BY RUBBING THEIR WINGS TOGETHER. Only the left wing has a scraper and the right wing has 300 teeth. That's basically a tiny chainsaw."
+            },
+            {
+                animal: "🦖 T-REX",
+                fact: "T-Rex arms were so powerful they could lift 400 pounds each. Their arms were STRONGER than human legs. Those tiny arms? MONSTERS."
+            },
+            {
+                animal: "🐙 OCTOPUS",
+                fact: "Octopuses have NINE BRAINS. One central brain and a mini-brain in each of their 8 arms. The arms can think independently. PURE NIGHTMARE FUEL."
+            },
+            {
+                animal: "🦑 ANGLERFISH",
+                fact: "Male anglerfish are so small compared to females that they literally FUSE to the female's body and their skin connects. They share blood. Absolutely UNHINGED relationship."
+            },
+            {
+                animal: "🦛 HIPPO",
+                fact: "Hippos can RUN 30 MPH on land despite weighing 4000 pounds. They also have PINK SWEAT that acts as sunscreen and antibiotic. What is this creature?!"
+            },
+            {
+                animal: "🦅 EAGLE",
+                fact: "Eagles can spot a rabbit from 2 MILES away. Their vision is 8 times better than humans. They're basically flying surveillance drones from 1970s spy movies."
+            },
+            {
+                animal: "🦇 BAT",
+                fact: "Bats navigate using ECHOLOCATION. They emit 10-20 clicks per SECOND. Some bats can echolocate moving objects the size of human hair. They're sonar demons."
+            },
+            {
+                animal: "🦆 PLATYPUS",
+                fact: "Platypuses glow BLUE-GREEN under ultraviolet light. Also they have no stomach - their esophagus connects directly to intestines. They're aliens who crashed on Earth."
+            },
+            {
+                animal: "🐢 TURTLE",
+                fact: "Some turtles can breathe through their BUTTS. Seriously. They have cloacal respiration. Nature is BROKEN."
+            },
+            {
+                animal: "🦗 MANTIS SHRIMP",
+                fact: "Mantis shrimp can see 16 COLOR RECEPTORS (humans see 3). They punch with the force of a bullet. They also turn into berries when they molt. Certified chaos agents."
+            }
+        ];
 
-        document.addEventListener('mouseleave', () => {
-            mouseGlow.style.opacity = '0';
-        });
+        // Get random number within range
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-        // Smooth scroll
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+        // Generate random color
+        function getRandomColor() {
+            const colors = [
+                '#FF00FF', '#00FFFF', '#FFFF00', '#FF0000', '#00FF00', '#0000FF',
+                '#FF69B4', '#00FF7F', '#FFD700', '#FF1493', '#00CED1', '#9400D3',
+                '#FFA500', '#32CD32', '#DC143C', '#1E90FF', '#FF4500', '#00FA9A'
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Position elements randomly
+        function positionElement(element) {
+            const maxX = window.innerWidth - element.offsetWidth;
+            const maxY = window.innerHeight - element.offsetHeight;
+            
+            element.style.left = randomInRange(0, maxX) + 'px';
+            element.style.top = randomInRange(0, maxY) + 'px';
+        }
+
+        // Style element with random colors
+        function styleElement(element, isFact = false) {
+            const bgColor = getRandomColor();
+            const textColor = getRandomColor();
+            const borderColor = getRandomColor();
+            const rotation = randomInRange(-15, 15);
+
+            if (isFact) {
+                element.style.backgroundColor = bgColor + '40';
+                element.style.color = textColor;
+                element.style.borderColor = borderColor;
+                element.style.transform = `rotate(${rotation}deg)`;
+            } else {
+                element.style.backgroundColor = bgColor;
+                element.style.color = textColor;
+                element.style.borderColor = borderColor;
             }
         }
 
-        // Load tools from GitHub
-        async function loadTools() {
-            const container = document.getElementById('downloadsContainer');
-            const baseUrl = 'https://github.com/fd-iw/Downloads/raw/refs/heads/main/';
+        // Initialize on load
+        function initializeCursedness() {
+            const title = document.getElementById('title');
+            const factCard = document.getElementById('factCard');
+            const nextBtn = document.getElementById('nextBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const infoTexts = document.querySelectorAll('.info-text');
+
+            // Position and style everything randomly
+            const maxX = window.innerWidth - 300;
+            const maxY = window.innerHeight - 100;
+
+            title.style.setProperty('--h1-rotate', randomInRange(-10, 10) + 'deg');
+            title.style.left = randomInRange(10, maxX) + 'px';
+            title.style.top = randomInRange(0, 100) + 'px';
+            title.style.color = getRandomColor();
+
+            positionElement(factCard);
+            styleElement(factCard, true);
+
+            positionElement(nextBtn);
+            styleElement(nextBtn);
+            nextBtn.style.boxShadow = `5px 5px 0 ${getRandomColor()}, 10px 10px 0 ${getRandomColor()}`;
+
+            positionElement(resetBtn);
+            styleElement(resetBtn);
+            resetBtn.style.boxShadow = `5px 5px 0 ${getRandomColor()}, 10px 10px 0 ${getRandomColor()}`;
+
+            // Info texts
+            infoTexts.forEach(text => {
+                text.style.setProperty('--info-rotate', randomInRange(-45, 45) + 'deg');
+                positionElement(text);
+                text.style.color = getRandomColor();
+            });
+
+            // Load first fact
+            showRandomFact();
+        }
+
+        // Display random fact
+        function showRandomFact() {
+            const randomFact = animalFacts[Math.floor(Math.random() * animalFacts.length)];
+            const factText = document.getElementById('factText');
             
-            try {
-                // Fetch the repository contents using GitHub API
-                const response = await fetch('https://api.github.com/repos/fd-iw/Downloads/contents/', {
-                    headers: {
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
+            factText.innerHTML = `<strong>${randomFact.animal}</strong><br><br>${randomFact.fact}`;
+            
+            // Restyle the card
+            const factCard = document.getElementById('factCard');
+            styleElement(factCard, true);
+            
+            // Create sparkles
+            createSparkles();
+        }
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch');
-                }
-
-                const files = await response.json();
+        // Create sparkle effects
+        function createSparkles() {
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = '✨';
+                sparkle.style.left = randomInRange(0, window.innerWidth) + 'px';
+                sparkle.style.top = randomInRange(0, window.innerHeight) + 'px';
+                sparkle.style.setProperty('--tx', randomInRange(-100, 100) + 'px');
+                sparkle.style.setProperty('--ty', randomInRange(-100, 100) + 'px');
+                sparkle.style.color = getRandomColor();
+                sparkle.style.fontSize = randomInRange(10, 30) + 'px';
                 
-                // Extract unique tool names from .zip and .png files
-                const tools = {};
-                files.forEach(file => {
-                    const name = file.name.split('.')[0];
-                    const ext = file.name.split('.').pop().toLowerCase();
-                    
-                    if (ext === 'zip' || ext === 'png') {
-                        if (!tools[name]) {
-                            tools[name] = {};
-                        }
-                        tools[name][ext] = file.name;
-                    }
-                });
-
-                // Filter tools that have both zip and png
-                const validTools = Object.entries(tools).filter(([_, files]) => files.zip && files.png);
-
-                if (validTools.length === 0) {
-                    container.innerHTML = `
-                        <div class="no-downloads">
-                            <p>No tools available yet. Check back soon!</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Create tool cards
-                container.innerHTML = '';
-                validTools.forEach(([toolName, files], index) => {
-                    const zipUrl = baseUrl + files.zip;
-                    const pngUrl = baseUrl + files.png;
-                    
-                    const card = document.createElement('div');
-                    card.className = 'tool-card';
-                    card.style.animationDelay = (index * 0.1) + 's';
-                    
-                    card.innerHTML = `
-                        <div class="tool-image">
-                            <img src="${pngUrl}" alt="${toolName}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22%3E%3Crect fill=%22%23222%22 width=%22300%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2220%22 fill=%22%239d4edd%22%3E${toolName}%3C/text%3E%3C/svg%3E'">
-                        </div>
-                        <div class="tool-info">
-                            <div class="tool-name">${toolName}</div>
-                            <div class="tool-description">
-                                Download this tool and expand your capabilities
-                            </div>
-                            <a href="${zipUrl}" download style="text-decoration: none;">
-                                <button class="download-btn">
-                                    ⬇️ Download
-                                </button>
-                            </a>
-                        </div>
-                    `;
-                    
-                    container.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error('Error loading tools:', error);
-                container.innerHTML = `
-                    <div class="no-downloads">
-                        <p>Unable to load tools. Please try again later.</p>
-                    </div>
-                `;
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
             }
         }
 
-        // Contact form handler
-        function handleContactSubmit(event) {
-            event.preventDefault();
-            const formStatus = document.getElementById('formStatus');
-            const submitBtn = document.querySelector('.submit-btn');
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-
-            // Simulate sending (in production, this would go to your backend)
-            setTimeout(() => {
-                formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
-                formStatus.style.color = 'var(--purple-light)';
-                document.getElementById('contactForm').reset();
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-
-                setTimeout(() => {
-                    formStatus.textContent = '';
-                }, 5000);
-            }, 1500);
-        }
-
-        // Load tools when page loads
-        window.addEventListener('load', () => {
-            loadTools();
+        // Event listeners
+        document.getElementById('nextBtn').addEventListener('click', showRandomFact);
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            localStorage.setItem('cursed-reset', Date.now());
+            location.reload();
         });
 
-        // Add parallax effect
-        window.addEventListener('scroll', () => {
-            const parallaxElements = document.querySelectorAll('.parallax-section');
-            parallaxElements.forEach(element => {
-                const scrollPosition = window.pageYOffset;
-                const elementOffset = element.offsetTop;
-                const distance = scrollPosition - elementOffset;
-                
-                if (Math.abs(distance) < window.innerHeight * 1.5) {
-                    element.style.opacity = Math.min(1, 0.5 + Math.abs(distance) / (window.innerHeight / 2));
-                }
-            });
-        });
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.skill-card, .tool-card').forEach(element => {
-            observer.observe(element);
-        });
+        // Initialize everything on load
+        window.addEventListener('load', initializeCursedness);
+        window.addEventListener('resize', initializeCursedness);
     </script>
 </body>
 </html>
