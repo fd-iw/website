@@ -24,9 +24,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 80px;
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            height: auto;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -35,7 +34,6 @@
             transform: translateY(-100%);
             transition: transform 0.3s ease;
             z-index: 1000;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         }
 
         body:hover .slider-container {
@@ -57,28 +55,11 @@
         }
 
         .color-display {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            border: 2px solid #333;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            background-color: #ffffff;
+            display: none;
         }
 
         .reset-button {
-            padding: 8px 16px;
-            background-color: #666;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        .reset-button:hover {
-            background-color: #444;
+            display: none;
         }
     </style>
 </head>
@@ -103,20 +84,14 @@
         const resetButton = document.getElementById('resetButton');
         const body = document.body;
 
-        function updateColor(hue) {
-            // Convert HSL to RGB for smooth color transitions
-            // Using HSL makes it easy to get all colors from white to black
-            let lightness = 50 + (hue / 360) * 0; // Keep saturation consistent
+        function updateColor(value) {
+            // Convert slider value (0-360) to RGB values (255-0)
+            // 0 = white (255,255,255)
+            // 180 = gray (127,127,127)
+            // 360 = black (0,0,0)
             
-            // Create a smooth gradient through the color spectrum
-            // 0-60: Red to Yellow
-            // 60-120: Yellow to Green
-            // 120-180: Green to Cyan
-            // 180-240: Cyan to Blue
-            // 240-300: Blue to Magenta
-            // 300-360: Magenta to Red
-            
-            const color = `hsl(${hue}, 100%, 50%)`;
+            const rgbValue = Math.round(255 - (value / 360) * 255);
+            const color = `rgb(${rgbValue}, ${rgbValue}, ${rgbValue})`;
             
             body.style.backgroundColor = color;
             colorDisplay.style.backgroundColor = color;
