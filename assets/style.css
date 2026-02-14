@@ -1,1 +1,140 @@
+:root {
+  --accent: #6366f1;     /* indigo-500 */
+  --accent-dark: #4f46e5;
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #e2e8f0;
+  --text-light: #94a3b8;
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+header {
+  border-bottom: 1px solid #334155;
+  background: #0f172a;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tabs {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: white;
+}
+
+.tab.active {
+  color: white;
+  border-bottom-color: var(--accent);
+  background: linear-gradient(to top, #1e293b22, transparent);
+}
+
+.container {
+  max-width: 800px;
+  margin: 2.5rem auto;
+  padding: 0 1rem;
+}
+
+h1 {
+  margin-bottom: 2rem;
+  color: var(--accent);
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+}
+
+.card h2 {
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.color-picker {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.color-picker input[type="color"] {
+  width: 80px;
+  height: 50px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #0000;
+  border: 2px solid #475569;
+  cursor: pointer;
+}
+
+button {
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#apply-color {
+  background: var(--accent);
+  color: white;
+}
+
+#apply-color:hover {
+  background: var(--accent-dark);
+}
+
+#reset-color {
+  background: #475569;
+  color: white;
+}
+
+#reset-color:hover {
+  background: #64748b;
+}
+
+.hint {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+}
