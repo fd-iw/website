@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings - fdiw.cc</title>
-  <style>body{font-family:sans-serif;text-align:center;padding:40px;}</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Site – Settings</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style id="accent-style"></style>
 </head>
 <body>
-  <h1>Settings</h1>
-  <p>This would be your settings/dashboard page.</p>
-  <a href="/">← Back to main page</a>
+
+  <header>
+    <nav class="tabs">
+      <a href="/home/" class="tab">Home</a>
+      <a href="/settings/" class="tab active">Settings</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Settings</h1>
+
+    <div class="card">
+      <h2>Accent Color</h2>
+      <p>Pick a new theme color:</p>
+
+      <div class="color-picker">
+        <input type="color" id="accent-color" value="#6366f1">
+        <button id="apply-color">Apply</button>
+        <button id="reset-color">Reset</button>
+      </div>
+
+      <p class="hint">Saved in your browser — works across all pages.</p>
+    </div>
+  </main>
+
+  <script src="../assets/script.js"></script>
 </body>
 </html>
