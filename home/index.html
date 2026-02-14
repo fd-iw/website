@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Section</title>
-  <style>body{font-family:sans-serif;text-align:center;padding:40px;}</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Site – Home</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style id="accent-style"></style>
 </head>
 <body>
-  <h1>Home Page</h1>
-  <p>You are now at /home</p>
-  <a href="/">← Back to main page</a>
+
+  <header>
+    <nav class="tabs">
+      <a href="/home/" class="tab active">Home</a>
+      <a href="/settings/" class="tab">Settings</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Home</h1>
+
+    <div class="card">
+      <h2>About</h2>
+      <p>This is a small static website hosted on GitHub Pages.</p>
+      <p>Go to <a href="/settings/">Settings</a> to change the accent color — it persists across pages.</p>
+    </div>
+
+    <div class="card">
+      <h2>Credits</h2>
+      <ul>
+        <li>HTML + CSS + vanilla JavaScript</li>
+        <li>Color persistence via localStorage</li>
+        <li>Hosted with ❤️ on GitHub Pages</li>
+        <li>Created by dis • 2026</li>
+      </ul>
+    </div>
+  </main>
+
+  <script src="../assets/script.js"></script>
 </body>
 </html>
