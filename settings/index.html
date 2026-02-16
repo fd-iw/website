@@ -12,6 +12,7 @@
   <header>
     <nav class="tabs">
       <a href="/home/" class="tab">Home</a>
+      <a href="/webhook/" class="tab">Discord Webhook</a>
       <a href="/settings/" class="tab active">Settings</a>
     </nav>
   </header>
@@ -19,21 +20,49 @@
   <main class="container">
     <h1>Settings</h1>
 
+    <div id="message" class="message"></div>
+
     <div class="card">
-      <h2>Accent Color</h2>
-      <p>Pick a new theme color:</p>
+      <h2>🎨 Accent Color</h2>
+      <p>Customize the theme color for the entire website. Your preference is saved in your browser and persists across all pages.</p>
 
       <div class="color-picker">
         <input type="color" id="accent-color" value="#6366f1">
-        <button id="apply-color">Apply</button>
-        <button id="reset-color">Reset</button>
+        <button id="apply-color">Apply Color</button>
+        <button id="reset-color">Reset to Default</button>
       </div>
 
-      <p class="hint">Saved in your browser — works across all pages.</p>
+      <p class="hint">
+        💡 Try different colors to personalize your experience. Changes apply instantly to all pages!
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>📊 Storage Information</h2>
+      <p>This website uses your browser's localStorage to save:</p>
+      <ul>
+        <li>Your selected accent color theme</li>
+        <li>Saved Discord webhook configurations</li>
+      </ul>
+      <p class="hint">
+        ⚠️ Clearing your browser data will remove these saved preferences.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>⚙️ Advanced</h2>
+      <p>Want to reset everything? This will clear all saved data including webhooks and color preferences.</p>
+      <div class="button-group" style="margin-top: 1rem;">
+        <button class="btn-danger" onclick="if(confirm('Are you sure? This will delete all saved data!')) { localStorage.clear(); location.reload(); }">
+          Clear All Data
+        </button>
+      </div>
+      <p class="hint">
+        ⚠️ This action cannot be undone!
+      </p>
     </div>
   </main>
 
   <script src="../assets/script.js"></script>
 </body>
 </html>
-
