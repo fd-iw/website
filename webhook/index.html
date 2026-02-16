@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>fdiw – Discord Webhook</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style id="accent-style"></style>
+</head>
+<body>
+
+  <header>
+    <nav class="tabs">
+      <a href="/home/" class="tab">Home</a>
+      <a href="/webhook/" class="tab active">Discord Webhook</a>
+      <a href="/settings/" class="tab">Settings</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Discord Webhook</h1>
+
+    <div id="message" class="message"></div>
+
+    <!-- Send Message Card -->
+    <div class="card">
+      <h2>📤 Send Message</h2>
+      <p>Select a webhook and send a message to your Discord channel.</p>
+
+      <div class="form-group">
+        <label for="webhook-select">Select Webhook</label>
+        <select id="webhook-select" style="width: 100%; padding: 0.9rem 1.2rem; background: rgba(15, 23, 42, 0.6); border: 2px solid var(--border); border-radius: 10px; color: var(--text); font-size: 0.95rem; font-family: inherit; cursor: pointer; transition: all 0.3s;">
+          <option value="">No webhooks available</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="webhook-message">Message</label>
+        <textarea 
+          id="webhook-message" 
+          placeholder="Type your message here..."
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="webhook-username">Custom Username (Optional)</label>
+        <input 
+          type="text" 
+          id="webhook-username" 
+          placeholder="Leave empty to use default webhook name"
+        />
+      </div>
+
+      <div class="button-group">
+        <button id="send-webhook" class="btn-primary">Send Message</button>
+      </div>
+
+      <p class="hint">
+        💡 Messages are sent directly to Discord via the webhook API. Make sure your webhook has the necessary permissions.
+      </p>
+    </div>
+
+    <!-- Add Webhook Card -->
+    <div class="card">
+      <h2>➕ Add New Webhook</h2>
+      <p>Save a Discord webhook URL for easy access. You can add multiple webhooks.</p>
+
+      <div class="form-group">
+        <label for="webhook-name">Webhook Name</label>
+        <input 
+          type="text" 
+          id="webhook-name" 
+          placeholder="e.g., Main Server, Notifications, etc."
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="webhook-url">Webhook URL</label>
+        <input 
+          type="url" 
+          id="webhook-url" 
+          placeholder="https://discord.com/api/webhooks/..."
+        />
+      </div>
+
+      <div class="button-group">
+        <button id="add-webhook" class="btn-primary">Add Webhook</button>
+      </div>
+
+      <p class="hint">
+        💡 <strong>How to get a webhook URL:</strong><br>
+        1. Go to your Discord server settings<br>
+        2. Navigate to Integrations → Webhooks<br>
+        3. Click "New Webhook" or select an existing one<br>
+        4. Click "Copy Webhook URL"
+      </p>
+    </div>
+
+    <!-- Saved Webhooks Card -->
+    <div class="card">
+      <h2>🔗 Saved Webhooks</h2>
+      <p>Manage your saved Discord webhooks. You can test or delete them here.</p>
+
+      <div id="webhook-list"></div>
+    </div>
+
+    <!-- Info Card -->
+    <div class="card">
+      <h2>ℹ️ About Discord Webhooks</h2>
+      <p>Discord webhooks allow you to send automated messages and notifications to Discord channels without needing a bot.</p>
+      
+      <h3>Features:</h3>
+      <ul>
+        <li>Send custom messages to any channel with webhook access</li>
+        <li>Customize the username that appears in Discord</li>
+        <li>Store multiple webhooks for different channels/servers</li>
+        <li>Test webhooks to ensure they're working correctly</li>
+      </ul>
+
+      <h3>Security Note:</h3>
+      <p class="hint">
+        ⚠️ Webhook URLs are stored locally in your browser. Never share your webhook URLs publicly as anyone with the URL can send messages to your Discord channel.
+      </p>
+    </div>
+  </main>
+
+  <script src="../assets/script.js"></script>
+</body>
+</html>
