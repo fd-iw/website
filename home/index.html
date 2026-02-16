@@ -12,6 +12,7 @@
   <header>
     <nav class="tabs">
       <a href="/home/" class="tab active">Home</a>
+      <a href="/webhook/" class="tab">Discord Webhook</a>
       <a href="/settings/" class="tab">Settings</a>
     </nav>
   </header>
@@ -20,23 +21,63 @@
     <h1>Home</h1>
 
     <div class="card">
-      <h2>About</h2>
-      <p>This is a small static website hosted on GitHub Pages.</p>
-      <p>Go to <a href="/settings/">Settings</a> to change the accent color — it persists across pages.</p>
+      <h2>✨ Welcome to fdiw</h2>
+      <p>A modern, customizable static website hosted on GitHub Pages with powerful features.</p>
+      <p>Explore the navigation above to discover what you can do:</p>
+      <ul>
+        <li><strong>Discord Webhook</strong> - Send messages to Discord channels via webhooks</li>
+        <li><strong>Settings</strong> - Customize the accent color theme</li>
+      </ul>
     </div>
 
     <div class="card">
-      <h2>Credits</h2>
+      <h2>🚀 Features</h2>
       <ul>
-        <li>HTML + CSS + vanilla JavaScript</li>
-        <li>Color persistence via localStorage</li>
-        <li>Hosted with ❤️ on GitHub Pages</li>
-        <li>Created by dis • 2026</li>
+        <li>Modern, responsive design with glass-morphism effects</li>
+        <li>Customizable accent colors with persistence</li>
+        <li>Discord webhook management and message sending</li>
+        <li>Easy to extend - just drop in a new folder with index.html</li>
+        <li>Universal CSS and JavaScript in the assets folder</li>
+        <li>Smooth animations and transitions</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h2>📝 How to Add New Pages</h2>
+      <p>Adding a new page is simple:</p>
+      <ol style="list-style: decimal; padding-left: 2rem;">
+        <li style="padding: 0.5rem 0;">Create a new folder in your root directory (e.g., <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">/my-page/</code>)</li>
+        <li style="padding: 0.5rem 0;">Add an <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">index.html</code> file in that folder</li>
+        <li style="padding: 0.5rem 0;">Link to the universal assets: <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">../assets/style.css</code> and <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">../assets/script.js</code></li>
+        <li style="padding: 0.5rem 0;">Add a navigation link in the header tabs</li>
+      </ol>
+      <p class="hint">
+        💡 All styling and JavaScript functionality will automatically work on your new page!
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>🛠️ Tech Stack</h2>
+      <ul>
+        <li>HTML5 + CSS3 with modern CSS features</li>
+        <li>Vanilla JavaScript (no frameworks needed)</li>
+        <li>LocalStorage for data persistence</li>
+        <li>Discord Webhook API integration</li>
+        <li>Hosted on GitHub Pages</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>ℹ️ Credits</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+        Created with ❤️ by dis • 2026
+      </p>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Powered by modern web technologies and hosted on GitHub Pages
+      </p>
     </div>
   </main>
 
   <script src="../assets/script.js"></script>
 </body>
 </html>
-
