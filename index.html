@@ -477,6 +477,41 @@ body{
 .toast i{flex-shrink:0}
 @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
+/* File:// warning banner */
+.file-banner{
+  background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(251,191,36,0.03));
+  border:1px solid rgba(251,191,36,0.2);
+  border-radius:var(--radius);
+  padding:14px 18px;margin:12px 20px;
+  font-size:12px;line-height:1.7;color:var(--text-2);
+  display:none;
+}
+.file-banner.show{display:block;animation:msgIn .3s var(--ease)}
+.file-banner h4{
+  font-size:13px;font-weight:600;color:var(--yellow);
+  margin-bottom:4px;display:flex;align-items:center;gap:6px;
+}
+.file-banner code{
+  background:var(--bg-0);padding:2px 6px;border-radius:4px;
+  font:11.5px 'JetBrains Mono',monospace;color:var(--text-1);
+}
+.file-banner .cmd-block{
+  background:var(--bg-0);border:1px solid var(--border);
+  border-radius:6px;padding:8px 12px;margin:8px 0;
+  font:12px 'JetBrains Mono',monospace;color:var(--green);
+  cursor:pointer;position:relative;
+}
+.file-banner .cmd-block:hover{border-color:var(--accent)}
+.file-banner .cmd-block::after{
+  content:'click to copy';position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font:10px 'DM Sans',sans-serif;color:var(--text-3);
+}
+.proxy-toggle{
+  margin-top:8px;display:flex;align-items:center;gap:8px;
+}
+.proxy-toggle label{font-size:11.5px;color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:6px}
+.proxy-toggle input[type=checkbox]{accent-color:var(--accent);cursor:pointer}
+
 @media(max-width:768px){
   .sidebar{position:fixed;left:0;top:0;height:100vh;box-shadow:0 0 40px rgba(0,0,0,.5)}
   .sidebar.collapsed{transform:translateX(-280px)}
@@ -531,6 +566,16 @@ body{
   </div>
 
   <div class="chat-area" id="chatArea">
+    <div class="file-banner" id="fileBanner">
+      <h4><i data-lucide="triangle-alert" class="lucide-sm"></i> Running from a local file</h4>
+      Browsers block API calls from <code>file://</code> pages. To fix this, serve the file with a local server. Open a terminal in the folder containing this file and run:
+      <div class="cmd-block" onclick="copyCmd(this)">python -m http.server 8000</div>
+      Then open <code>http://localhost:8000/nexus-ai-chatbot.html</code> in your browser.
+      <br>Or use Node.js: <div class="cmd-block" onclick="copyCmd(this)">npx serve .</div>
+      <div class="proxy-toggle">
+        <label><input type="checkbox" id="proxyToggle" onchange="toggleProxy(this.checked)"> Use CORS proxy as workaround (slower, but works from file://)</label>
+      </div>
+    </div>
     <div class="msg-wrap" id="msgWrap"></div>
   </div>
 
@@ -588,7 +633,7 @@ const PROVIDERS = {
      *  - Preserve reasoning_details from assistant messages for multi-turn
      */
     call: async (model, messages, key) => {
-      const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const resp = await proxiedFetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${key}`,
@@ -639,7 +684,7 @@ const PROVIDERS = {
     placeholder: 'hf_…',
     hint: 'Get your token at huggingface.co/settings/tokens',
     call: async (model, messages, key) => {
-      const resp = await fetch(
+      const resp = await proxiedFetch(
         `https://api-inference.huggingface.co/models/${model.id}/v1/chat/completions`,
         {
           method: 'POST',
@@ -666,7 +711,7 @@ const PROVIDERS = {
     placeholder: 'sk-ant-api03-…',
     hint: 'Get your key at console.anthropic.com',
     call: async (model, messages, key) => {
-      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      const resp = await proxiedFetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'x-api-key': key,
@@ -692,7 +737,7 @@ const PROVIDERS = {
     placeholder: 'sk-proj-…',
     hint: 'Get your key at platform.openai.com/api-keys',
     call: async (model, messages, key) => {
-      const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+      const resp = await proxiedFetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${key}`,
@@ -712,7 +757,7 @@ const PROVIDERS = {
     placeholder: 'xai-…',
     hint: 'Get your key at console.x.ai',
     call: async (model, messages, key) => {
-      const resp = await fetch('https://api.x.ai/v1/chat/completions', {
+      const resp = await proxiedFetch('https://api.x.ai/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${key}`,
@@ -786,6 +831,18 @@ const MODELS = [
    STATE
    ═══════════════════════════════════════════ */
 let apiKeys = {}, selectedModel = null, chats = [], activeChatId = null, isGenerating = false;
+let useProxy = false;
+const isFileProtocol = window.location.protocol === 'file:';
+
+// CORS proxy wrapper — routes fetch through a public proxy when enabled
+async function proxiedFetch(url, options) {
+  if (useProxy) {
+    // Use corsproxy.io as the CORS proxy
+    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
+    return fetch(proxyUrl, options);
+  }
+  return fetch(url, options);
+}
 
 try {
   apiKeys = JSON.parse(localStorage.getItem('nex_keys') || '{}');
@@ -1114,8 +1171,19 @@ async function sendMessage(){
       chat.messages.push({ role:'assistant', content: reply, model: selectedModel.name });
     }
   }catch(err){
-    chat.messages.push({role:'assistant',content:`⚠️ **Error:** ${err.message}`,model:selectedModel.name});
-    showToast(err.message,'red');
+    let errText = err.message;
+    // Detect CORS / network errors and give helpful guidance
+    if (errText === 'Failed to fetch' || errText === 'NetworkError when attempting to access resource.') {
+      if (isFileProtocol && !useProxy) {
+        errText = 'Network blocked (file:// origin). Enable the CORS proxy toggle above, or serve this page from a local server.';
+      } else if (useProxy) {
+        errText = 'CORS proxy failed to reach the API. The proxy may be down — try again in a moment, or serve this page from localhost.';
+      } else {
+        errText = 'Network error — could not reach the API. Check your internet connection and API key.';
+      }
+    }
+    chat.messages.push({role:'assistant',content:`⚠️ **Error:** ${errText}`,model:selectedModel.name});
+    showToast(errText,'red');
   }
 
   isGenerating=false; document.getElementById('sendBtn').disabled=false;
@@ -1132,11 +1200,41 @@ function showTyping(){
 }
 
 /* ═══ BOOT ═══ */
+
+function copyCmd(el) {
+  navigator.clipboard?.writeText(el.textContent.trim());
+  el.style.borderColor = 'var(--green)';
+  setTimeout(() => el.style.borderColor = '', 1500);
+}
+
+function toggleProxy(on) {
+  useProxy = on;
+  localStorage.setItem('nex_proxy', on ? '1' : '0');
+  showToast(on ? 'CORS proxy enabled — API calls will be routed through corsproxy.io' : 'CORS proxy disabled', on ? 'green' : 'red');
+}
+
+function checkFileProtocol() {
+  if (isFileProtocol) {
+    const banner = document.getElementById('fileBanner');
+    banner.classList.add('show');
+    // Auto-enable proxy for file:// users
+    useProxy = true;
+    const toggle = document.getElementById('proxyToggle');
+    if (toggle) toggle.checked = true;
+  }
+  // Restore proxy preference
+  const saved = localStorage.getItem('nex_proxy');
+  if (saved === '1') {
+    useProxy = true;
+    const toggle = document.getElementById('proxyToggle');
+    if (toggle) toggle.checked = true;
+  }
+}
+
 function bootApp(){
   if(typeof lucide !== 'undefined' && lucide.createIcons){
     init();
   } else {
-    // lucide not loaded yet — render without icons first, retry when available
     renderChatList(); buildDropdown(); updateSelDisplay(); renderMessages();
     const check = setInterval(()=>{
       if(typeof lucide !== 'undefined' && lucide.createIcons){
@@ -1144,9 +1242,9 @@ function bootApp(){
         lucide.createIcons();
       }
     }, 200);
-    // Give up after 10s
     setTimeout(()=>clearInterval(check), 10000);
   }
+  checkFileProtocol();
 }
 
 // Load Lucide dynamically to guarantee sequencing
